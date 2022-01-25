@@ -38,10 +38,10 @@ export default class CognitoAuthScheme {
   async mounted() {
     if (this.options.tokenRequired) {
       const cognitoUser = this.$pool.getCurrentUser();
-      let token = false;
+      let idToken = false;
       if (cognitoUser) {
         try {
-          token = await new Promise((resolve, reject) => {
+          idToken = await new Promise((resolve, reject) => {
             cognitoUser.getSession((err, cognitoUserSession) => {
               if (err) {
                 return reject(err);
@@ -51,7 +51,12 @@ export default class CognitoAuthScheme {
           });
         } catch (error) {}
       }
-
+      let token = false;
+      if (idToken) {
+        token = this.options.tokenType
+          ? this.options.tokenType + ' ' + idToken
+          : idToken;
+      }
       this._setToken(token);
     }
 
