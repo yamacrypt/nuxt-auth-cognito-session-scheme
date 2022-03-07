@@ -7,9 +7,9 @@ import {
   CognitoUserPool,
   CognitoUser,
 } from "amazon-cognito-identity-js";
-import { UniversalStorageWrapper } from "@sirdiego/nuxt-auth-cognito-scheme/UniversalStorageWrapper";
+import { UniversalStorageWrapper } from "@sirdiego/nuxt-auth-cognito-scheme-using-session/UniversalStorageWrapper";
 
-export default class CognitoAuthScheme {
+export default class CognitoSessionAuthScheme {
   constructor(auth, options) {
     this.$auth = auth;
     this.name = options._name;
@@ -19,7 +19,7 @@ export default class CognitoAuthScheme {
     this.$pool = new CognitoUserPool({
       UserPoolId: this.options.userPoolId,
       ClientId: this.options.clientId,
-      Storage: this.$storage,
+      Storage: this.$storage
     });
   }
 
